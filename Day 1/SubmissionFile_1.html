@@ -1,0 +1,105 @@
+<h3 id="discovery">Discovery</h3>
+<ol type="1">
+<li>Search subnet for target computers:</li>
+</ol>
+<p><code>nmap 192.168.1.1/24</code></p>
+<figure>
+<img src="images_part1/nmap_subnet_scan.png" alt="" /><figcaption>Nmap Subnet Scan</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>Probe 192.168.1.105</li>
+</ol>
+<p><code>nmap -sC 192.168.1.105</code></p>
+<figure>
+<img src="images_part1/nmap_scan_target_105.png" alt="" /><figcaption>Scan of 192.168.1.105</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>Dirb 192.168.1.105</li>
+</ol>
+<p><code>dirb http://192.168.1.105</code></p>
+<figure>
+<img src="images_part1/dirb_target_105.png" alt="" /><figcaption>Dirb of 192.168.1.105</figcaption>
+</figure>
+<ol start="4" type="1">
+<li>Navigate through website.</li>
+</ol>
+<figure>
+<img src="images_part1/company_employees.png" alt="" /><figcaption>Company employees</figcaption>
+</figure>
+<ol start="5" type="1">
+<li>Under CEO’s page - Info pointing to a Secret folder</li>
+</ol>
+<figure>
+<img src="images_part1/secret_folder_clue.png" alt="" /><figcaption>Secret Folder Clue</figcaption>
+</figure>
+<ol start="6" type="1">
+<li>Secret Folder Restricted Login</li>
+</ol>
+<figure>
+<img src="images_part1/secret_folder_login.png" alt="" /><figcaption>Secret Folder Login</figcaption>
+</figure>
+<ol start="7" type="1">
+<li>Login obtained using brute force via Hydra</li>
+</ol>
+<p><code>hydra -l ashton -P /usr/share/wordlists/rockyou.txt -s 80 -f -vV 192.168.1.105 http-get /company_folders/secret_folder</code></p>
+<figure>
+<img src="images_part1/password_found.png" alt="" /><figcaption>Password Found</figcaption>
+</figure>
+<ol start="8" type="1">
+<li>Secret folder contents / instructions to access corporate server</li>
+</ol>
+<figure>
+<img src="images_part1/secret_folder_contents.png" alt="" /><figcaption>Secret Folder contents</figcaption>
+</figure>
+<figure>
+<img src="images_part1/corp_server_instructions.png" alt="" /><figcaption>Instructions to access corporate server</figcaption>
+</figure>
+<ol start="9" type="1">
+<li>Password crack on Ryan’s account using CrackStation</li>
+</ol>
+<figure>
+<img src="images_part1/crack_station_ryan.png" alt="" /><figcaption>CrackStation - Ryan</figcaption>
+</figure>
+<ol start="10" type="1">
+<li>Create payload - MSF Venom</li>
+</ol>
+<p>Source: https://infinitelogins.com/2020/01/25/msfvenom-reverse-shell-payload-cheatsheet/</p>
+<figure>
+<img src="images_part1/payload_syntax_examples.png" alt="" /><figcaption>Payload Syntax Examples</figcaption>
+</figure>
+<figure>
+<img src="images_part1/payload_created.png" alt="" /><figcaption>Payload Created</figcaption>
+</figure>
+<ol start="11" type="1">
+<li>Payload uploaded using default linux file manager</li>
+</ol>
+<figure>
+<img src="images_part1/payload_uploaded.png" alt="" /><figcaption>Payload Uploaded 1</figcaption>
+</figure>
+<figure>
+<img src="images_part1/payload_uploaded_2.png" alt="" /><figcaption>Payload Uploaded 2</figcaption>
+</figure>
+<ol start="12" type="1">
+<li>Setting up listener - Metasploit - multi/handler</li>
+</ol>
+<figure>
+<img src="images_part1/setting_up_listener.png" alt="" /><figcaption>Setting Up Listener</figcaption>
+</figure>
+<ol start="13" type="1">
+<li>Successful reverse Meterpreter shell</li>
+</ol>
+<figure>
+<img src="images_part1/successful_connection.png" alt="" /><figcaption>Successful reverse shell</figcaption>
+</figure>
+<ol start="14" type="1">
+<li>Navigating target file structure</li>
+</ol>
+<figure>
+<img src="images_part1/target_root_folder.png" alt="" /><figcaption>Target folder</figcaption>
+</figure>
+<ol start="15" type="1">
+<li>Located flag</li>
+</ol>
+<figure>
+<img src="images_part1/flag.png" alt="" /><figcaption>The Flag</figcaption>
+</figure>

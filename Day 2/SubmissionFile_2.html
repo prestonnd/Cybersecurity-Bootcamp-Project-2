@@ -1,0 +1,90 @@
+<ol type="1">
+<li>Identify the offensive traffic.
+<ul>
+<li>Identify the traffic between your machine and the web machine:
+<ul>
+<li><p>When did the interaction occur?</p>
+<p><code>Local server time: 18:20</code></p></li>
+<li><p>What responses did the victim send back?</p>
+<p><code>HTTP 401</code></p>
+<figure>
+<img src="images_part2/http_401_error.png" alt="" /><figcaption>401 Error</figcaption>
+</figure></li>
+<li><p>What data is concerning from the Blue Team perspective?</p>
+<p><code>High number of log in attempts from on IP ins a short amount of tme</code></p>
+<figure>
+<img src="images_part2/network_spike_1.png" alt="" /><figcaption>Network spike</figcaption>
+</figure>
+<figure>
+<img src="images_part2/network_spike_2.png" alt="" /><figcaption>Network spike</figcaption>
+</figure></li>
+</ul></li>
+</ul></li>
+<li>Find the request for the hidden directory.
+<ul>
+<li>In your attack, you found a secret folder. Let’s look at that interaction between these two machines.
+<ul>
+<li><p>How many requests were made to this directory? At what time and from which IP address(es)?</p>
+<p><code>Approximately 45,000 requests</code></p>
+<p><code>Local server time: 18:20</code></p>
+<p><code>192.168.1.90</code></p></li>
+<li><p>Which files were requested? What information did they contain?</p>
+<p><code>//company_folders/secret_folder/connect_to_corp_server/</code></p>
+<p><code>Contained instructions to access corporate server</code></p></li>
+<li><p>What kind of alarm would you set to detect this behavior in the future?</p>
+<p><code>Consecutive number of failed attempts above baseline in specified amount of time.</code></p></li>
+<li><p>Identify at least one way to harden the vulnerable machine that would mitigate this attack.</p>
+<p><code>2FA for logins from unknown IPs (CAPTCHA / Authenticator app)</code></p>
+<p><code>Time delay after set amount of failed logins</code></p></li>
+</ul></li>
+</ul></li>
+<li>Identify the brute force attack.
+<ul>
+<li>After identifying the hidden directory, you used Hydra to brute-force the target server. Answer the following questions:
+<ul>
+<li><p>Can you identify packets specifically from Hydra?</p>
+<figure>
+<img src="images_part2/user_agent_hydra.png" alt="" /><figcaption>User Agent Hydra</figcaption>
+</figure></li>
+<li><p>How many requests were made in the brute-force attack?</p>
+<p><code>Approximately 45,000</code></p></li>
+<li><p>How many requests had the attacker made before discovering the correct password in this one?</p>
+<p><code>Approximately 45,000</code></p></li>
+<li><p>What kind of alarm would you set to detect this behavior in the future and at what threshold(s)?</p>
+<p><code>Consecutive number of failed attempts above baseline in specified amount of time.</code></p></li>
+<li><p>Identify at least one way to harden the vulnerable machine that would mitigate this attack.</p>
+<p><code>2FA for logins from unknown IPs (CAPTCHA / Authenticator app)</code></p>
+<p><code>Time delay after set amount of failed logins</code></p></li>
+</ul></li>
+</ul></li>
+<li>Find the WebDav connection.
+<ul>
+<li>Use your dashboard to answer the following questions:
+<ul>
+<li><p>How many requests were made to this directory?</p>
+<p><code>23</code></p></li>
+<li><p>Which file(s) were requested?</p>
+<p><code>shell.php</code></p></li>
+<li><p>What kind of alarm would you set to detect such access in the future?</p>
+<p><code>Alert on any new files added to the system remotely from unknown IPs</code></p></li>
+<li><p>Identify at least one way to harden the vulnerable machine that would mitigate this attack.</p>
+<p><code>Restrict uploads to only safe files (No exacutable or scripting files)</code></p>
+<p><code>Local virus / malware scanner</code></p></li>
+</ul></li>
+</ul></li>
+<li>Identify the reverse shell and meterpreter traffic.
+<ul>
+<li>To finish off the attack, you uploaded a PHP reverse shell and started a meterpreter shell session. Answer the following questions:
+<ul>
+<li><p>Can you identify traffic from the meterpreter session?</p>
+<p><code>Check for outbound connections to attacker machine</code></p>
+<figure>
+<img src="images_part2/reverse_connection.png" alt="" /><figcaption>Outbound connection</figcaption>
+</figure></li>
+<li><p>What kinds of alarms would you set to detect this behavior in the future?</p>
+<p><code>Report on any outbound connections to unknown IPs</code></p></li>
+<li><p>Identify at least one way to harden the vulnerable machine that would mitigate this attack.</p>
+<p><code>Restrict outbound connections to unknown IPs through firewall</code></p></li>
+</ul></li>
+</ul></li>
+</ol>
